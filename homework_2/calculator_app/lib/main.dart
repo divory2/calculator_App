@@ -54,18 +54,54 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
+  var input ='';
+  var answer = '';
+  int userInput = 0;
+
+  final List <String> calculatorButtons= [
+    'C',
+    '+/-',
+    '%',
+    'DEL',
+    '7',
+    '8',
+    '9',
+    '/',
+    '4',
+    '5',
+    '6',
+    'x',
+    '1',
+    '2',
+    '3',
+    '-',
+    '0',
+    '.',
+    '=',
+    '+', //list that contains all the buttons for calculator
+
+  ];
+
+  // @override
+  // void initState(){
+  //   // TODO: implement ==
+  //   setState(() {
+  //     String input = '';
+
+  //   });
+  // }
+
+  // void _incrementCounter() {
+  //   setState(() {
+  //     // This call to setState tells the Flutter framework that something has
+  //     // changed in this State, which causes it to rerun the build method below
+  //     // so that the display can reflect the updated values. If we changed
+  //     // _counter without calling setState(), then the build method would not be
+  //     // called again, and so nothing would appear to happen.
+  //     _counter++;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -104,19 +140,65 @@ class _MyHomePageState extends State<MyHomePage> {
           // wireframe for each widget.
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text('You have pushed the button this many times:'),
-            Text(
-              '$_counter',
+            Expanded(child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Container(
+                  padding: EdgeInsets.all(20),
+                  alignment: Alignment.centerRight,
+                  child: Text(
+                    input,
+                    style: TextStyle(fontSize: 18,
+                    color: Colors.white),
+
+
+
+                  ),
+
+
+                ),
+                Container(
+                  padding: EdgeInsets.all(15),
+                  alignment: Alignment.centerRight,
+                  child: Text(
+                    answer,
+                    style: TextStyle(fontSize: 30,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold),
+
+
+                  ),
+                ),
+              ],
+            ),)
+            ,
+            SizedBox(
+              width: 100,
+              child: TextField(
+              onChanged: (value){
+                setState(() {
+                  userInput = int.tryParse(value)!;
+                });
+               
+              },
+               decoration: const InputDecoration(
+                  labelText: 'Enter Number',
+                  hintText: 'Type or press desired value',
+                  border: OutlineInputBorder(),
+                ),
               style: Theme.of(context).textTheme.headlineMedium,
             ),
+            ),
+
+            
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: _incrementCounter,
+      //   tooltip: 'Increment',
+      //   child: const Icon(Icons.add),
+      // ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
