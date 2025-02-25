@@ -78,7 +78,9 @@ class _MyHomePageState extends State<MyHomePage> {
     '0',
     '.',
     '=',
-    '+', //list that contains all the buttons for calculator
+    '+',
+    '(',
+    ')', //list that contains all the buttons for calculator
 
   ];
   void solveExpression(){
@@ -103,25 +105,7 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-  // @override
-  // void initState(){
-  //   // TODO: implement ==
-  //   setState(() {
-  //     String input = '';
-
-  //   });
-  // }
-
-  // void _incrementCounter() {
-  //   setState(() {
-  //     // This call to setState tells the Flutter framework that something has
-  //     // changed in this State, which causes it to rerun the build method below
-  //     // so that the display can reflect the updated values. If we changed
-  //     // _counter without calling setState(), then the build method would not be
-  //     // called again, and so nothing would appear to happen.
-  //     _counter++;
-  //   });
-  // }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -231,6 +215,11 @@ class _MyHomePageState extends State<MyHomePage> {
                         }
                         else if (calculatorButtons[index] == 'DEL') {
                         input = input.isNotEmpty ? input.substring(0, input.length - 1) : input; //only get the subsrring all the way to one less than the last index
+                      }
+                      else if(calculatorButtons[index]== '+/-'){
+                        double temp = double.tryParse(input)! * -1;
+                        input = temp.toString();
+
                       }
                       else{
                         input+= calculatorButtons[index];
