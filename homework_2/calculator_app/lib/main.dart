@@ -85,14 +85,23 @@ class _MyHomePageState extends State<MyHomePage> {
   ];
   void solveExpression(){
     try{  
-      String formatInput = input.replaceAll('x', '*'); //replacing x with * for entire string input
+      String formatInput = input.replaceAll('x', '*').replaceAll('%', '/100'); //replacing x with * for entire string input
 
       Parser parser = Parser();//parser obj 
       Expression exp = parser.parse(formatInput); //parser converts String into expression 
       ContextModel cm = ContextModel(); // this is used for if expression contains variable 
       double answer = exp.evaluate(EvaluationType.REAL, cm);
       setState(() {
-        input = answer.toString();
+        if(answer.isNaN){
+          input = "Not a Number";
+        }
+        else if (answer.isInfinite){
+          input ='Undefined';
+        }
+        else{
+          input = answer.toString();
+
+        }
       });
 
 
