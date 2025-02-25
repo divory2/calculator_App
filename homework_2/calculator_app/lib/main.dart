@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:math_expressions/math_expressions.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -56,7 +56,6 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
 
   var input ='';
-  var answer = '';
   int userInput = 0;
 
   final List <String> calculatorButtons= [
@@ -82,6 +81,27 @@ class _MyHomePageState extends State<MyHomePage> {
     '+', //list that contains all the buttons for calculator
 
   ];
+  void solveExpression(){
+    try{  
+      String formatInput = input.replaceAll('x', '*'); //replacing x with * for entire string input
+
+      Parser parser = Parser();//parser obj 
+      Expression exp = parser.parse(formatInput); //parser converts String into expression 
+      ContextModel cm = ContextModel(); // this is used for if expression contains variable 
+      double answer = exp.evaluate(EvaluationType.REAL, cm);
+      setState(() {
+        input = answer.toString();
+      });
+
+
+    }
+    catch(e){
+      setState(() {
+        input = 'Error';
+      });
+
+    }
+  }
 
   // @override
   // void initState(){
@@ -149,7 +169,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: Text(
                     input,
                     style: TextStyle(fontSize: 18,
-                    color: Colors.white),
+                    color: Colors.black),
 
 
 
@@ -161,7 +181,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   padding: EdgeInsets.all(15),
                   alignment: Alignment.centerRight,
                   child: Text(
-                    answer,
+                    input,
                     style: TextStyle(fontSize: 30,
                     color: Colors.white,
                     fontWeight: FontWeight.bold),
@@ -196,19 +216,21 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Container(
               child: GridView.builder(
                 itemCount: calculatorButtons.length,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4), 
-                itemBuilder:(BuildContext context, int index){
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4), //define how many columns i want in grid
+                itemBuilder:(BuildContext context, int index){ //mapping function this is how 
                   return GestureDetector(
                     onTap: (){
                       setState(() {
                         if(calculatorButtons[index]== '='){
+                          solveExpression();
 
                         }
                         else if(calculatorButtons[index]=='C'){
+                          input = '';
 
                         }
                         else if (calculatorButtons[index] == 'DEL') {
-                        input = input.isNotEmpty ? input.substring(0, input.length - 1) : input;
+                        input = input.isNotEmpty ? input.substring(0, input.length - 1) : input; //only get the subsrring all the way to one less than the last index
                       }
                       else{
                         input+= calculatorButtons[index];
