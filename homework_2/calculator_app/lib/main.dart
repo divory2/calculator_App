@@ -169,30 +169,77 @@ class _MyHomePageState extends State<MyHomePage> {
 
                   ),
                 ),
-              ],
-            ),)
-            ,
-            SizedBox(
-              width: 100,
-              child: TextField(
-              onChanged: (value){
-                setState(() {
-                  userInput = int.tryParse(value)!;
-                });
-               
-              },
-               decoration: const InputDecoration(
-                  labelText: 'Enter Number',
-                  hintText: 'Type or press desired value',
-                  border: OutlineInputBorder(),
-                ),
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-            ),
 
+              ],
+            ),),
+
+            // SizedBox(
+            //   width: 100,
+            //   child: TextField(
+            //   onChanged: (value){
+            //     setState(() {
+            //       userInput = int.tryParse(value)!;
+            //     });
+               
+            //   },
+            //    decoration: const InputDecoration(
+            //       labelText: 'Enter Number',
+            //       hintText: 'Type or press desired value',
+            //       border: OutlineInputBorder(),
+            //     ),
+            //   style: Theme.of(context).textTheme.headlineMedium,
+            // ),
+            // ),
+
+            Expanded(
+            flex: 3,
+            child: Container(
+              child: GridView.builder(
+                itemCount: calculatorButtons.length,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4), 
+                itemBuilder:(BuildContext context, int index){
+                  return GestureDetector(
+                    onTap: (){
+                      setState(() {
+                        if(calculatorButtons[index]== '='){
+
+                        }
+                        else if(calculatorButtons[index]=='C'){
+
+                        }
+                        else if (calculatorButtons[index] == 'DEL') {
+                        input = input.isNotEmpty ? input.substring(0, input.length - 1) : input;
+                      }
+                      else{
+                        input+= calculatorButtons[index];
+
+                      }
+                    });
+                    },
+                    child: Container(
+                      margin: EdgeInsets.all(4),
+                      decoration: BoxDecoration(
+                        color: Colors.grey,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    child: Center(
+                      child: Text(
+                        calculatorButtons[index],
+                        style: TextStyle(fontSize: 24,
+                        color: Colors.white),
+                      ),
+                    ),
+                    ),
+                  );
+                  
+                }),
+            ),
             
+          ),
           ],
+          
         ),
+        
       ),
       // floatingActionButton: FloatingActionButton(
       //   onPressed: _incrementCounter,
